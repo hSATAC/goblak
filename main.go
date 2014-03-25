@@ -7,6 +7,7 @@ import (
 	"image/png"    // Register PNG  format
 	"log"
 	"net/http"
+	"os"
 )
 
 // Converted implements image.Image, so you can
@@ -35,7 +36,7 @@ func (c *Converted) At(x, y int) color.Color {
 func main() {
 	http.Handle("/gray", http.HandlerFunc(convertGray))
 	http.Handle("/bw", http.HandlerFunc(convertBw))
-	err := http.ListenAndServe(":2003", nil)
+	err := http.ListenAndServe(os.Getenv("PORT"), nil)
 	if err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
